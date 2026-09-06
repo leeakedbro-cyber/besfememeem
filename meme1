@@ -46,7 +46,7 @@ Tab:CreateToggle({
             while AutoTP do
                -- 1. konuma ışınlan
                TeleportTo(Pos1)
-               task.wait(2)
+               task.wait(1)
                
                if not AutoTP then break end
                
