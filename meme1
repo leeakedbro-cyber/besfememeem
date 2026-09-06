@@ -1,0 +1,75 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "Ebeyin ammmiii",
+   LoadingTitle = "Yükleniyor...",
+   LoadingSubtitle = "by besfe",
+   ConfigurationSaving = {
+      Enabled = false
+   },
+   KeySystem = false
+})
+
+local Tab = Window:CreateTab("Besfe", 4483362458)
+
+local Players = game:GetService("Players")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local LocalPlayer = Players.LocalPlayer
+
+local Pos1 = Vector3.new(169, 1, 82)   -- 1. konum
+local Pos2 = Vector3.new(171, 5, 415)    -- 2. konum
+
+local AutoTP = false
+
+local function TeleportTo(pos)
+   local char = LocalPlayer.Character
+   if char and char:FindFirstChild("HumanoidRootPart") then
+      char.HumanoidRootPart.CFrame = CFrame.new(pos)
+   end
+end
+
+local function PressKey(key, duration)
+   VirtualInputManager:SendKeyEvent(true, key, false, game)
+   task.wait(duration)
+   VirtualInputManager:SendKeyEvent(false, key, false, game)
+end
+
+Tab:CreateToggle({
+   Name = "Besdenin Büyüsü",
+   CurrentValue = false,
+   Flag = "AutoTP",
+   Callback = function(Value)
+      AutoTP = Value
+      
+      if AutoTP then
+         task.spawn(function()
+            while AutoTP do
+               -- 1. konuma ışınlan
+               TeleportTo(Pos1)
+               task.wait(2)
+               
+               if not AutoTP then break end
+               
+               -- 2. konuma ışınlan
+               TeleportTo(Pos2)
+               
+               -- 1 saniye geri git (S)
+               PressKey(Enum.KeyCode.S, 1)
+               
+               if not AutoTP then break end
+               
+               -- 1 saniye ileri git (W)
+               PressKey(Enum.KeyCode.W, 1)
+               
+               task.wait(0.1) -- küçük bekleme
+            end
+         end)
+      end
+   end,
+})
+
+Rayfield:Notify({
+   Title = "Uçan Memeler",
+   Content = "Bio yok meme",
+   Duration = 5
+})
